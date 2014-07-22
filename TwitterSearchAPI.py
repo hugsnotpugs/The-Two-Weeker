@@ -1,7 +1,9 @@
+''' Implementation of the Twitter Search API '''
+
+
 import pandas as pd
 import json
 import time
-
 
 class TwitterGrabber:
     
