@@ -7,6 +7,7 @@ import pandas as pd
 import numpy as np
 import sys
 import wordcloud
+import os
 
 data = pd.read_csv('xkcd_tweets.csv')
 data = data[data['language'] == 'English'].drop_duplicates(cols='user_id')
@@ -31,8 +32,6 @@ km.fit(X)
 # Create cluster outputs
 output_dict = {'cluster': km.labels_, 'values': dataset}
 output_df = pd.DataFrame(output_dict)
-
-os.chdir('/Users/chuanhe/desktop/code/CSV')
 
 # Create text files 
 for i in range(true_k):
