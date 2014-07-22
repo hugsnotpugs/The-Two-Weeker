@@ -1,3 +1,7 @@
+''' Uses geocoders.GoogleV3 to query lat/lon coordinates based on string inputs
+    SingleQuery class queries a single location, while MultiQuery queries an array of locations
+    Note: GoogleV3 only allows 1 query per 1.5 seconds. Occasionally queries will time out or fail '''
+
 from geopy import geocoders
 import time
 
@@ -6,31 +10,31 @@ class SingleQuery():
     def __init__(self, location_string=''):
         self.location = location_string
     
-    def get_coord(self):
+    def coords(self):
         
         gn = geocoders.GoogleV3()
         try:
-            test_result = gn.geocode(self.location)
-            if test_result is not None:
-                place, (lat, lng) = test_result
-                result = ('{}, {}'.format(lat, lng)).split(',')
+            test_geo = gn.geocode(self.location)
+            if test_geo is not None:
+                place, (lat, lng) = test_geo
+                match = ('{}, {}'.format(lat, lng)).split(',')
         except ValueError:
-            result = None
+            match = None
             
-        for i in range(len(result)):
-            result[i] = float(result[i])
+        for i in range(len(match)):
+            match[i] = float(match[i])
         
-        return (result[0], result[1]) # result[0] is latitude, result[1] is longitude
+        return (match[0], match[1]) # match[0] is latitude, match[1] is longitude
         
 class MultiQuery():
     
     def __init__(self, location_array=[]):
         self.location_array = location_array
     
-    def get_coord(self):
+    def coords(self):
         
-        coord_list = []
-        match = []
+        lats = []
+        lons = []
         gn = geocoders.GoogleV3()
         
         for i in self.location_array:
@@ -39,24 +43,22 @@ class MultiQuery():
                 if test_geo is not None:
                     place, (lat, lng) = test_geo
                     match = '{}, {}'.format(lat, lng).split(',')
-                    for i in match:
-                        i = float(i)
-                        coord_list.append(i)
-                        #print coord_list[-1]
+                    for j in range(len(match)):
+                        match[j] = float(match[j])
+                    lats.append(match[0])
+                    lons.append(match[1])
                 else:
                     match = None
-                    coord_list.append(None), coord_list.append(None)
-                    #print coord_list[-1]
-                    
+                    lats.append(None), lons.append(None)
+                                        
             except ValueError:
-                match = None
-                coord_list.append(None), coord_list.append(None)
+                match = None, lats.append(None), lons.append(None)
                 time.sleep(5)
             except gn.timeout:
-                match = None
-                coord_list.append(None), coord_list.append(None)
+                match = None, lats.append(None), lons.append(None)
                 time.sleep(5)
-            
             time.sleep(1.5)
                 
-        return coord_list
+        return {'lats': lats, 'lons': lons}
+        
+        
