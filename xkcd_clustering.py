@@ -1,3 +1,5 @@
+''' Creates clusters, txtfiles and wordclouds from xkcd tweeter/user descrptions '''
+
 from sklearn.decomposition import TruncatedSVD
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.preprocessing import Normalizer
