@@ -8,7 +8,7 @@ import numpy as np
 import sys
 import wordcloud
 
-data = pd.read_csv('TwitterData - XKCD 05-23 v4.csv')
+data = pd.read_csv('xkcd_tweets.csv')
 data = data[data['language'] == 'English'].drop_duplicates(cols='user_id')
 dataset = data['descriptions'].dropna().values
 
