@@ -1,4 +1,4 @@
-''' Create a global heatmap using Cartopy '''
+''' Create a world heatmap using Cartopy '''
 
 import matplotlib as mpl
 import matplotlib.pyplot as plt
@@ -21,20 +21,20 @@ class HeatMap:
         self.ocean = ocean
         self.borders = borders
         
-    def plot(self, pais, lats, lons, plot_nones=False, show_values=False):
+    def plot(self, countries, lats, lons, plot_nones=False, show_values=False):
             
-        pais = list(pais.values)
+        countries = list(countries.values)
         lats = list(lats.values)
         lons = list(lons.values)
         
         # Count the number of times a country is in the list
-        unique_pais = set(pais)
-        unique_pais = list(unique_pais)
+        unique_countries = set(countries)
+        unique_countries = list(unique_countries)
         c_number = []
-        for p in unique_pais:
-            c_number.append(math.log(pais.count(p)))
+        for p in unique_countries:
+            c_number.append(math.log(countries.count(p)))
             if show_values == True:
-                print p, pais.count(p)
+                print p, countries.count(p)
 
         maximo = max(c_number)
 
@@ -65,8 +65,8 @@ class HeatMap:
         for country in shpreader.Reader(countries_shp).records():
             nome = country.attributes['name_long']       
 
-            if nome in unique_pais:
-                i = unique_pais.index(nome)
+            if nome in unique_countries:
+                i = unique_countries.index(nome)
                 numero = c_number[i]
                 map.add_geometries(country.geometry, ccrs.PlateCarree(),
                               facecolor=cmap(numero / float(maximo), 1),
@@ -78,7 +78,7 @@ class HeatMap:
                                facecolor='#FAFAFA',
                                label=nome)
 
-        if counter != len(unique_pais):
+        if counter != len(unique_countries):
             print "check country names!"
         
         plt.show()
