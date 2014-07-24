@@ -1,8 +1,8 @@
 ''' Code to help with NLP analysis: 
-    NLPOperations Methods
-    1. Find the optimal rank of your data matrix (LSA / SVD / PCA)
-    2. Find the optimal k in k-means clustering (spherical) 
-    Note: NLPOperations takes vectorized data as an input (i.e. TF-IDF) '''
+    Methods:
+    1. Find the optimal reduced rank of your data matrix (using SVD / PCA)
+    2. Find the optimal k in k-means clustering based on Within Cluster Sum of Squares (default distance = cosine)
+    Note: NLPOperations takes vectorized data as an input (i.e. TF-IDF, or numerical data) '''
 
 from sklearn.decomposition import TruncatedSVD
 from sklearn.preprocessing import Normalizer
@@ -14,7 +14,7 @@ import seaborn as sns
 import numpy as np
 
 ### Class takes vectorized data as inputs
-class NLPOperations():
+class ScreePlots():
     
     def __init__(self, vectorized_data):
         self.X = vectorized_data
