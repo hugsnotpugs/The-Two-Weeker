@@ -1,5 +1,5 @@
 ''' Code to help with NLP analysis: 
-    NLPOperations Methods:
+    NLPOperations Methods
     1. Find the optimal rank of your data matrix (LSA / SVD / PCA)
     2. Find the optimal k in k-means clustering (spherical) 
     Note: NLPOperations takes vectorized data as an input (i.e. TF-IDF) '''
