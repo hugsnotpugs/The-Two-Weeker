@@ -70,8 +70,6 @@ class TwitterGrabber:
         else:
             search_results = self.API.search.tweets(q=self.q, count=count, max_id = self.smallest_ID - 1, result_type = 'mixed')
             
-        #print json.dumps(search_results, indent=1)
-
         statuses = search_results['statuses']
         (data, smallest_id) = self.getTweets(statuses)
  
@@ -81,8 +79,7 @@ class TwitterGrabber:
             
             print smallest_id
             search_results = self.API.search.tweets(q = self.q, count = count, max_id = smallest_id - 1, result_type = 'mixed')
-            #print json.dumps(search_results, indent=1)
-            
+
             statuses = search_results['statuses']
             
             if len(statuses) > 0: # if API call works
